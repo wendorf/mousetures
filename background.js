@@ -24,35 +24,33 @@ function nextTab(tabs) {
   }
 }
 
+var mouseStatus = new MouseStatus({resetSession: true});
 function navigateTo(tab) {
   var protocol = tab.url.split(':')[0];
   var supportedProtocols = ['https', 'http'];
   if (supportedProtocols.every(function(p) { return p !== protocol })) {
-    mouseStatus = defaultMouseStatus();
+    mouseStatus.ready.then(function() {
+      mouseStatus.reset();
+    });
   }
   chrome.tabs.update(tab.id, {active: true});
 }
 
 var actions = {
-  "previous": function(mouseStatus) {
+  "previous": function() {
     chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
       navigateTo(previousTab(tabs));
     });
   },
-  "next": function(mouseStatus) {
+  "next": function() {
     chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
       navigateTo(nextTab(tabs));
     });
   }
 };
 
-var mouseStatus = defaultMouseStatus();
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  mouseStatus = request.mouseStatus;
   if(request.event) {
-    actions[request.event](request.mouseStatus);
+    actions[request.event]();
   }
-});
-chrome.tabs.onActivated.addListener(function(activeInfo) {
-  chrome.tabs.sendMessage(activeInfo.tabId, mouseStatus);
 });
