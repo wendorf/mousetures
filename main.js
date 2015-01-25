@@ -12,7 +12,7 @@ var BUTTONS = {
   RIGHT: 3
 };
 
-document.onmousedown = function(event) {
+document.addEventListener('mousedown', function(event) {
   if (event.which === BUTTONS.LEFT) {
     mouseStatus.left = STATUSES.DOWN;
     if (mouseStatus.right === STATUSES.DOWN) {
@@ -31,22 +31,22 @@ document.onmousedown = function(event) {
       });
     }
   }
-};
+});
 
-document.onmouseup = function(event) {
+document.addEventListener('mouseup', function(event) {
   if (event.which === BUTTONS.LEFT) {
     mouseStatus.left = STATUSES.UP;
   } else if (event.which === BUTTONS.RIGHT) { 
     mouseStatus.right = STATUSES.UP;
   }
   chrome.extension.sendMessage({mouseStatus: mouseStatus});
-};
+});
 
-document.oncontextmenu = function(event) {
+document.addEventListener('contextmenu', function(event) {
   if (mouseStatus.left === STATUSES.DOWN) {
-    return false;
+    return event.preventDefault();
   }
-};
+});
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   mouseStatus = request;
