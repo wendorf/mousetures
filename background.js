@@ -46,16 +46,6 @@ var actions = {
   }
 };
 
-var STATUSES = {
-  UP: 0,
-  DOWN: 1
-}
-function defaultMouseStatus() {
-  return {
-    left: STATUSES.UP,
-    right: STATUSES.UP
-  };
-}
 var mouseStatus = defaultMouseStatus();
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   mouseStatus = request.mouseStatus;
@@ -65,4 +55,4 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 });
 chrome.tabs.onActivated.addListener(function(activeInfo) {
   chrome.tabs.sendMessage(activeInfo.tabId, mouseStatus);
-})
+});

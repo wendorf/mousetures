@@ -1,17 +1,3 @@
-var STATUSES = {
-  UP: 0,
-  DOWN: 1
-}
-var mouseStatus = {
-  left: STATUSES.UP,
-  right: STATUSES.UP
-}
-
-var BUTTONS = {
-  LEFT: 1,
-  RIGHT: 3
-};
-
 document.addEventListener('mousedown', function(event) {
   if (event.which === BUTTONS.LEFT) {
     mouseStatus.left = STATUSES.DOWN;

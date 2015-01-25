@@ -9,13 +9,13 @@
     "tabs"
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["mouseStatus.js", "background.js"]
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "run_at": "document_start",
-      "js": ["main.js"]
+      "js": ["mouseStatus.js", "main.js"]
     }
   ]
 }
