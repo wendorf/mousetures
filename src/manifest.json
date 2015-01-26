@@ -3,7 +3,7 @@
 
   "name": "Mousetures",
   "description": "Rocker gestures for tab switching",
-  "version": "0.3",
+  "version": "0.4",
 
   "permissions": [
     "tabs",
