@@ -28,7 +28,7 @@ mouseStatus.ready.then(function(response) {
         beginMoveGesture(event);
       }
     }
-  });
+  }, true);
 
   document.addEventListener('mouseup', function(event) {
     var previousStatus;
@@ -49,12 +49,12 @@ mouseStatus.ready.then(function(response) {
         finishMoveGesture(event); 
       }
     }
-  });
+  }, true);
 
   document.addEventListener('contextmenu', function(event) {
     if (mouseEventGroup(event).belongsToGesture) {
       event.preventDefault();
       event.stopPropagation();
     }
-  });
+  }, true);
 });

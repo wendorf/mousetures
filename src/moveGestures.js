@@ -21,13 +21,13 @@ function beginMoveGesture(event) {
   path = [];
 
   trackingMoveGesture = true;
-  document.addEventListener('mousemove', moveTracker);
+  document.addEventListener('mousemove', moveTracker, true);
 };
 
 function cancelMoveGesture() {
   path = [];
   trackingMoveGesture = false;
-  document.removeEventListener('mousemove', moveTracker);
+  document.removeEventListener('mousemove', moveTracker, true);
 }
 
 function finishMoveGesture() {
