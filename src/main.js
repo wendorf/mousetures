@@ -5,6 +5,7 @@ mouseStatus.ready.then(function(response) {
       mouseStatus.left(STATUSES.DOWN);
 
       if (mouseStatus.right() === STATUSES.DOWN || mouseStatus.right() === STATUSES.SWITCHING) {
+        cancelMoveGesture();
         mouseStatus.right(STATUSES.SWITCHING);
         mouseStatus.left(STATUSES.SWITCHING);
 
@@ -16,12 +17,15 @@ mouseStatus.ready.then(function(response) {
       mouseStatus.right(STATUSES.DOWN);
 
       if (mouseStatus.left() === STATUSES.DOWN || mouseStatus.left() === STATUSES.SWITCHING) {
+        cancelMoveGesture();
         mouseStatus.right(STATUSES.SWITCHING);
         mouseStatus.left(STATUSES.SWITCHING);
 
         chrome.extension.sendMessage({
           event: 'next'
         });
+      } else {
+        beginMoveGesture(event);
       }
     }
   });
@@ -39,12 +43,16 @@ mouseStatus.ready.then(function(response) {
     if (previousStatus === STATUSES.SWITCHING) {
       event.preventDefault();
       event.stopPropagation();
-      mouseEventGroup(event).belongsToSwitch = true;
+      mouseEventGroup(event).belongsToGesture = true;
+    } else {
+      if (event.button === BUTTONS.RIGHT) {
+        finishMoveGesture(event); 
+      }
     }
   });
 
   document.addEventListener('contextmenu', function(event) {
-    if (mouseEventGroup(event).belongsToSwitch) {
+    if (mouseEventGroup(event).belongsToGesture) {
       event.preventDefault();
       event.stopPropagation();
     }

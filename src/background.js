@@ -46,11 +46,17 @@ var actions = {
     chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
       navigateTo(nextTab(tabs));
     });
+  },
+  "closeCurrent": function(sender) {
+    chrome.tabs.remove(sender.tab.id);
+  },
+  "reloadCurrent": function(sender) {
+    chrome.tabs.reload(sender.tab.id);
   }
 };
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.event) {
-    actions[request.event]();
+    actions[request.event](sender);
   }
 });
