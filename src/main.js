@@ -22,6 +22,7 @@ function cancelEvent(event) {
 document.addEventListener('mousedown', function (event) {
   if (event.buttons === MULTI_BUTTONS.BOTH) {
     cancelMoveGesture();
+    cancelEvent(event);
 
     var message = event.button === BUTTONS.LEFT ? 'previous' : 'next';
     chrome.extension.sendMessage({
