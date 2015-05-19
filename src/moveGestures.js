@@ -14,7 +14,7 @@ var gestures = {
       event: 'reloadCurrent'
     });
   }
-}
+};
 
 function beginMoveGesture(event) {
   previous = new Point(event);
@@ -22,7 +22,7 @@ function beginMoveGesture(event) {
 
   trackingMoveGesture = true;
   document.addEventListener('mousemove', moveTracker, true);
-};
+}
 
 function cancelMoveGesture() {
   path = [];

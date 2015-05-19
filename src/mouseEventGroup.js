@@ -9,7 +9,7 @@ var eventTriggers = {
   contextmenu: 'mouseup',
   dblclick: 'mouseup',
   mouseup: 'mouseup'
-}
+};
 
 function MouseEventGroup(event) {
   this.events = [event];
@@ -27,7 +27,7 @@ MouseEventGroup.prototype.shouldIncludeEvent = function shouldIncludeEvent(event
   var validTime = event.timeStamp - this.earliestTimeStamp <= EVENT_GROUP_VALID_RANGE;
 
   return sameButton && sameTrigger && validTime;
-}
+};
 
 function cleanupOldEventGroups() {
   var latestTimeStamp = eventGroups.reduce(function(a, b) {

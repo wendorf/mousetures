@@ -6,7 +6,7 @@ function previousTab(tabs) {
   var current = currentTab(tabs);
   var previousIndex = current.index - 1;
   if (previousIndex === -1) {
-    var previousId = tabs[tabs.length - 1].id
+    var previousId = tabs[tabs.length - 1].id;
     return tabs.filter(function(tab) { return tab.id === previousId })[0];
   } else {
     return tabs.filter(function(tab) { return tab.index === previousIndex })[0];

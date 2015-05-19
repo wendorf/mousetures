@@ -36,7 +36,7 @@ function MouseStatus(options) {
         }
       });
     });
-  })
+  });
 
   function accessor(property) {
     that[property] = function(value) {
@@ -59,7 +59,7 @@ var STATUSES = {
   UP: 0,
   DOWN: 1,
   SWITCHING: 2
-}
+};
 
 var BUTTONS = {
   LEFT: 0,
