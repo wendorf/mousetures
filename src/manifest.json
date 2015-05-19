@@ -10,13 +10,13 @@
     "storage"
   ],
   "background": {
-    "scripts": ["mouseStatus.js", "background.js"]
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "run_at": "document_start",
-      "js": ["mouseEventGroup.js", "mouseStatus.js", "point.js", "moveGestures.js", "main.js"]
+      "js": ["mouseEventGroup.js", "point.js", "moveGestures.js", "main.js"]
     }
   ]
 }

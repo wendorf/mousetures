@@ -24,15 +24,7 @@ function nextTab(tabs) {
   }
 }
 
-var mouseStatus = new MouseStatus({resetSession: true});
 function navigateTo(tab) {
-  var protocol = tab.url.split(':')[0];
-  var supportedProtocols = ['https', 'http'];
-  if (supportedProtocols.every(function(p) { return p !== protocol })) {
-    mouseStatus.ready.then(function() {
-      mouseStatus.reset();
-    });
-  }
   chrome.tabs.update(tab.id, {active: true});
 }
 

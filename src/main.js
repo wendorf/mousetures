@@ -1,60 +1,50 @@
-var mouseStatus = new MouseStatus();
-mouseStatus.ready.then(function(response) {
-  document.addEventListener('mousedown', function(event) {
-    if (event.button === BUTTONS.LEFT) {
-      mouseStatus.left(STATUSES.DOWN);
+var BUTTONS = {
+  LEFT: 0,
+  RIGHT: 2
+};
 
-      if (mouseStatus.right() === STATUSES.DOWN || mouseStatus.right() === STATUSES.SWITCHING) {
-        cancelMoveGesture();
-        mouseStatus.right(STATUSES.SWITCHING);
-        mouseStatus.left(STATUSES.SWITCHING);
+var MULTI_BUTTONS = {
+  NONE: 0,
+  LEFT: 1,
+  RIGHT: 2,
+  BOTH: 3
+};
 
-        chrome.extension.sendMessage({
-          event: 'previous'
-        });
-      }
-    } else if (event.button === BUTTONS.RIGHT) {
-      mouseStatus.right(STATUSES.DOWN);
+var Rocker = {
+  releasing: false
+};
 
-      if (mouseStatus.left() === STATUSES.DOWN || mouseStatus.left() === STATUSES.SWITCHING) {
-        cancelMoveGesture();
-        mouseStatus.right(STATUSES.SWITCHING);
-        mouseStatus.left(STATUSES.SWITCHING);
+function cancelEvent(event) {
+  event.preventDefault();
+  event.stopPropagation();
+}
 
-        chrome.extension.sendMessage({
-          event: 'next'
-        });
-      } else {
-        beginMoveGesture(event);
-      }
-    }
-  }, true);
+document.addEventListener('mousedown', function (event) {
+  if (event.buttons === MULTI_BUTTONS.BOTH) {
+    cancelMoveGesture();
 
-  document.addEventListener('mouseup', function(event) {
-    var previousStatus;
-    if (event.button === BUTTONS.LEFT) {
-      previousStatus = mouseStatus.left();
-      mouseStatus.left(STATUSES.UP);
-    } else if (event.button === BUTTONS.RIGHT) {
-      previousStatus = mouseStatus.right();
-      mouseStatus.right(STATUSES.UP);
-    }
+    var message = event.button === BUTTONS.LEFT ? 'previous' : 'next';
+    chrome.extension.sendMessage({
+      event: message
+    });
+  } else if (event.button === BUTTONS.RIGHT) {
+    beginMoveGesture(event);
+  }
+}, true);
 
-    if (previousStatus === STATUSES.SWITCHING) {
-      event.preventDefault();
-      event.stopPropagation();
-      mouseEventGroup(event).belongsToGesture = true;
-    } else {
-      if (event.button === BUTTONS.RIGHT) {
-        finishMoveGesture(event); 
-      }
-    }
-  }, true);
+document.addEventListener('mouseup', function (event) {
+  if (Rocker.releasing || event.buttons !== MULTI_BUTTONS.NONE) {
+    cancelEvent(event);
+    mouseEventGroup(event).belongsToGesture = true;
+  } else if (event.button === BUTTONS.RIGHT) {
+    finishMoveGesture(event);
+  }
 
-  document.addEventListener('contextmenu', function(event) {
-    if (mouseEventGroup(event).belongsToGesture) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }, true);
-});
+  Rocker.releasing = (event.buttons !== MULTI_BUTTONS.NONE);
+}, true);
+
+document.addEventListener('contextmenu', function (event) {
+  if (mouseEventGroup(event).belongsToGesture) {
+    cancelEvent(event);
+  }
+}, true);
