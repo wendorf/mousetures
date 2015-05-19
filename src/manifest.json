@@ -3,7 +3,7 @@
 
   "name": "Mousetures",
   "description": "Mouse and rocker gestures for tab switching, closing, and reloading",
-  "version": "0.5",
+  "version": "0.6",
 
   "permissions": [
     "tabs",
