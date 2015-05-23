@@ -3,19 +3,6 @@ var path;
 var trackingMoveGesture = false;
 var MINIMUM_DISTANCE_BETWEEN_POINTS = 15;
 
-var gestures = {
-  D: function() {
-    chrome.extension.sendMessage({
-      event: 'closeCurrent'
-    });
-  },
-  DU: function() {
-    chrome.extension.sendMessage({
-      event: 'reloadCurrent'
-    });
-  }
-};
-
 function beginMoveGesture(event) {
   previous = new Point(event);
   path = [];
@@ -35,13 +22,11 @@ function finishMoveGesture() {
     return;
   }
 
-  var gesture = gestures[path.join('')];
-  if (gesture) {
+  var gesture = path.join('');
+  if (executeActionForGesture(gesture)) {
     event.preventDefault();
     event.stopPropagation();
     mouseEventGroup(event).belongsToGesture = true;
-
-    gesture();
   }
 
   cancelMoveGesture();

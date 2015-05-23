@@ -6,6 +6,7 @@
   "version": "0.6",
 
   "permissions": [
+    "storage",
     "tabs",
     "http://*/*",
     "https://*/*"
@@ -18,7 +19,7 @@
       "matches": ["<all_urls>"],
       "run_at": "document_start",
       "all_frames": true,
-      "js": ["mouseEventGroup.js", "point.js", "moveGestures.js", "main.js", "upgradeContentScriptHelper.js"]
+      "js": ["mouseEventGroup.js", "point.js", "moveGestures.js", "main.js", "upgradeContentScriptHelper.js", "gestureHandler.js"]
     }
   ]
 }

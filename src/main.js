@@ -24,10 +24,8 @@ document.addEventListener('mousedown', function (event) {
     cancelMoveGesture();
     cancelEvent(event);
 
-    var message = event.button === BUTTONS.LEFT ? 'previous' : 'next';
-    chrome.extension.sendMessage({
-      event: message
-    });
+    var gesture = event.button === BUTTONS.LEFT ? 'rockLeft' : 'rockRight';
+    executeActionForGesture(gesture);
   } else if (event.button === BUTTONS.RIGHT) {
     beginMoveGesture(event);
   }

@@ -47,8 +47,22 @@ var actions = {
   }
 };
 
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.extension.onMessage.addListener(function(request, sender) {
   if(request.event) {
     actions[request.event](sender);
+  }
+});
+
+chrome.storage.sync.get('gestureMap', function(items) {
+  if(!items['gestureMap']) {
+    var DEFAULT_GESTURE_MAP = {
+      rockLeft: 'previous',
+      rockRight: 'next',
+
+      D: 'closeCurrent',
+      DU: 'reloadCurrent'
+    };
+
+    chrome.storage.sync.set({'gestureMap': DEFAULT_GESTURE_MAP});
   }
 });
