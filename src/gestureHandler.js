@@ -17,3 +17,9 @@ function findActionByGesture(gesture) {
 chrome.storage.sync.get('gestureMap', function(items) {
   gestureMap = items['gestureMap'];
 });
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  if (namespace === 'sync' && changes['gestureMap']) {
+    gestureMap = changes['gestureMap'].newValue;
+  }
+});
