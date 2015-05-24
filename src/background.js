@@ -28,41 +28,14 @@ function navigateTo(tab) {
   chrome.tabs.update(tab.id, {active: true});
 }
 
-var actions = {
-  "previous": function() {
-    chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
-      navigateTo(previousTab(tabs));
-    });
-  },
-  "next": function() {
-    chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
-      navigateTo(nextTab(tabs));
-    });
-  },
-  "closeCurrent": function(sender) {
-    chrome.tabs.remove(sender.tab.id);
-  },
-  "reloadCurrent": function(sender) {
-    chrome.tabs.reload(sender.tab.id);
-  }
-};
-
 chrome.extension.onMessage.addListener(function(request, sender) {
   if(request.event) {
-    actions[request.event](sender);
+    action(request.event)(sender);
   }
 });
 
 chrome.storage.sync.get('gestureMap', function(items) {
   if(!items['gestureMap']) {
-    var DEFAULT_GESTURE_MAP = {
-      rockLeft: 'previous',
-      rockRight: 'next',
-
-      D: 'closeCurrent',
-      DU: 'reloadCurrent'
-    };
-
-    chrome.storage.sync.set({'gestureMap': DEFAULT_GESTURE_MAP});
+    chrome.storage.sync.set({'gestureMap': defaultGestureMap()});
   }
 });

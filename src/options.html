@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mousetures Options</title>
+  <style>
+    body {
+      padding: 10px;
+    }
+
+    .visible {
+      opacity: 1;
+      transition: opacity 0s linear;
+    }
+
+    .hidden {
+      opacity: 0;
+      transition: opacity 2s linear;
+    }
+
+    .description ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="description">
+  <ul>
+    <li><strong>Rocker gestures</strong>: Use "rockLeft" and "rockRight"</li>
+    <li><strong>Drag gestures</strong>: Combine U, D, L, and R. For example, "UDR" means "move the mouse up, then down, then right".</li>
+  </ul>
+</div>
+
+<form id="options">
+  <table class='actions'>
+    <thead>
+    <tr>
+      <th>Action</th>
+      <th>Gesture</th>
+    </tr>
+    </thead>
+    <tbody id="actions">
+
+    </tbody>
+  </table>
+
+  <input id="save" type="submit" value="Save"/>
+  <span id="saved" class="hidden">Saved</span>
+</form>
+
+<div id="status"></div>
+
+<script src="actions.js"></script>
+<script src="options.js"></script>
+</body>
+</html>
