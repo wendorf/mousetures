@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.0] - 2015-05-24
+- Gestures are immediately available on install/update of Mousetures
+- Gestures are now customizable from options page
+- Gestures work inside iframes
+
 ## [0.6.0] - 2015-05-19
 - Rocker gestures no longer get "stuck" when navigating to unsupported pages
 - Rocker gestures no longer highlight text when rapidly switching tabs
@@ -21,6 +26,7 @@
 - Initial version
 - Basic rocker gestures for tab navigation
 
+[0.7.0]: https://github.com/wendorf/mousetures/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/wendorf/mousetures/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/wendorf/mousetures/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/wendorf/mousetures/compare/v0.3.0...v0.4.0
